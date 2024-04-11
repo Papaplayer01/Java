@@ -1,0 +1,2192 @@
+slip 1 -
+
+1)
+import java.awt.*;
+import java.awt.event.*;
+class slip1_1 extends Frame implements Runnable
+{
+ Thread t;
+ int f,x,y;
+String str;
+ slip1_1()
+ {
+ t=new Thread(this);
+ t.start();
+ setLayout(null);
+ setSize(300,300);
+ setVisible(true);
+ f=1;
+ x=100;
+y=100;
+ str="hello java";
+ }
+ public void update() 
+ {
+ x=x+10*f;
+ if(x>300)
+ f=-1;
+ if(x<100)
+ f=1;
+ }
+ public void run()
+ {
+ while(true)
+ {
+repaint();
+ update(); 
+ try{
+ Thread.sleep(500);
+ }catch(Exception e){} 
+ }
+ }
+ public void paint(Graphics g)
+ {
+ g.drawString(str,x,y); 
+ }
+ public static void main(String a[])
+{
+ new slip1_1();
+ }
+}
+
+2)client
+
+import java.io.*;
+import java.net.*;
+public class slip1_2cli
+{
+public static void main(String args[])throws Exception
+{
+Socket s=new Socket("localhost",5000);
+BufferedReader in=new BufferedReader(new InputStreamReader(s.getInputStream()));
+PrintWriter out=new PrintWriter(s.getOutputStream(),true);
+BufferedReader consoleIn=new BufferedReader(new InputStreamReader(System.in));
+String ip;
+while((ip=consoleIn.readLine())!=null)
+{
+out.println(ip);
+String response=in.readLine();
+System.out.println("server: "+response);
+}
+in.close();
+out.close();
+s.close();
+}}
+
+2)server
+
+import java.io.*;
+import java.net.*;
+public class slip1_2ser
+{
+public static void main(String args[])throws Exception
+{
+ServerSocket ss=new ServerSocket(5000);
+System.out.println("server started. waiting for client... ");
+Socket cs=ss.accept();
+System.out.println("client connected");
+BufferedReader in=new BufferedReader(new InputStreamReader(cs.getInputStream()));
+PrintWriter out=new PrintWriter(cs.getOutputStream(),true);
+BufferedReader consoleIn=new BufferedReader(new InputStreamReader(System.in));
+String ip;
+while((ip=in.readLine())!=null)
+{
+System.out.println("client: "+ip);
+String response=consoleIn.readLine();
+out.println(response);
+}
+in.close();
+out.close();
+cs.close();
+ss.close();
+}}
+
+3)
+Public Class Form1
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Timer1.Enabled = True
+
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        TextBox1.Text = Val(TextBox1.Text) + 1
+    End Sub
+End Class
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into emp values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "')"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record saved successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+End Class
+
+
+slip 2 -
+
+1)slip2_1html.jsp
+<html>
+<body>
+<form action="slip2_1.jsp" method="post">
+Enter Number :<input type="text" name="t1">
+<input type="submit" value="Submit" name="s1">
+</form>
+</body>
+</html>
+
+1)slip2_1.jsp
+<%@ page import="java.util.*" %>
+<%
+if(request.getParameter("s1")!=null)
+  {
+	Integer num,a,i,sum = 0;
+	
+	num = Integer.parseInt(request.getParameter("t1"));
+	a = num;
+
+	for(i=1;i<a;i++)
+	{
+		if(a%i==0)
+		{
+			sum=sum + i;
+		}
+	}
+	if(sum==a)
+	{
+		out.println(+num+ " is a perfect number");
+	}
+	else
+	{
+		out.println(+num+ " is not a perfect number");
+	}
+  }	
+%>
+
+2)
+import java.awt.*;
+public class slip2_2 extends Frame
+{
+ int f = 0;
+ public slip2_2()
+{
+ flag s = new flag();
+ s.start();
+ setSize(500,500);
+ setVisible(true);
+ }
+ public void paint (Graphics g)
+ {
+ switch (f)
+{
+ case 0 :
+ g.drawLine(150, 50, 150, 300);
+ case 1 :
+ g.drawRect(150, 50, 100, 90);
+ }
+ }
+
+class flag extends Thread
+{
+ public void run()
+{
+ while(true)
+{
+ f = (f+1)%2;
+ repaint();
+ try
+{
+ Thread.sleep(1000);
+ }catch(Exception e){ }
+ }
+ }
+}
+ public static void main(String args[])
+{
+ new slip2_2();
+ }
+}
+
+3)
+Public Class Form1
+    Dim x As Integer = 0
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Label1.Location = New Point(x, 100)
+        x = x + 10
+        If x > Me.Width - Label1.Width Then
+            Timer1.Enabled = False
+        End If
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Label1.Location = New Point(x, 100)
+        x = x - 10
+        If x < Me.Width - Label1.Width Then
+            Timer1.Enabled = False
+        End If
+    End Sub
+End Class
+
+4)
+class dept
+{
+    protected int dno;
+    protected string dname;
+    public void setdept()
+
+    {
+        Console.Write("enter dept no. :");
+        dno = Convert.ToInt32(Console.ReadLine());
+        Console.Write("enter dept name :");
+        dname = Console.ReadLine();
+    }
+    public void getdept()
+    {
+        Console.Write("dept no :" + dno);
+        Console.Write("dept name :" + dname);
+    }
+}
+class sales:dept
+{
+    protected int amt;
+    public void setsales()
+    {
+        setdept();
+        Console.Write("enter sales amount:");
+        amt = Convert.ToInt32(Console.ReadLine());
+    }
+public void getsales()
+    {
+        getdept();
+        Console.Write("sales amount :" + amt);
+    }
+}
+class HR : dept
+{
+    protected int sal;
+    public void setHR()
+    {
+        setdept();
+        Console.WriteLine("enter salary amount:");
+        sal = Convert.ToInt32(Console.ReadLine());
+    }
+    public void getHR()
+    {
+        getdept();
+        Console.Write("salary amount :" + sal);
+    }
+}
+class program
+{
+    static void Main(string[] args)
+    {
+        sales s = new sales();
+        HR h = new HR();
+        Console.WriteLine("enter sales dept details:");
+        s.setsales();
+        Console.WriteLine("enter HR dept details:");
+        h.setHR();
+
+        Console.WriteLine("sales dept details:");
+        s.getsales();
+        Console.WriteLine("HR dept details:");
+        h.getHR();
+
+        Console.ReadKey();
+    }
+}
+
+slip 3 -
+
+1)client
+import java.io.*;
+import java.net.*;
+
+class slip3_1c
+{
+    public static void main(String args[])   
+    {
+        try
+        {
+            Socket cs = new Socket("LocalHost", 8420); 
+            
+            BufferedReader infu = new BufferedReader(new InputStreamReader(System.in)); 
+
+            System.out.println("Enter a number : ");
+
+            int a = Integer.parseInt(infu.readLine());  
+
+            DataOutputStream out = new DataOutputStream(cs.getOutputStream());   
+
+            out.writeInt(a);
+
+            DataInputStream in = new DataInputStream(cs.getInputStream()); 
+            
+            System.out.println(in.readUTF());
+            
+            cs.close();          }
+        catch(Exception e)
+        {
+            System.out.println(e.toString()); 
+        }
+    }
+}
+
+1)server
+import java.io.*;
+import java.net.*;
+class slip3_1s  
+{
+public static void main(String args[])      
+{
+  try{
+      ServerSocket ss = new ServerSocket(8420);   
+      System.out.println("Server Started...............");
+      Socket s = ss.accept();
+      DataInputStream in = new DataInputStream(s.getInputStream()); 
+      int x = in.readInt(); 
+      DataOutputStream otc = new DataOutputStream(s.getOutputStream());
+      int flag=0;  
+      for(int i = 2; i < x; i++)
+      { 
+        if(x % i == 0)  
+        { 
+          flag=1;
+          //otc.writeUTF(x + " is Prime");
+        }
+      } 
+      if(flag==0) {
+        otc.writeUTF(x + " is Prime");
+      }
+      else
+      {
+        otc.writeUTF(x + " is not Prime");
+      }
+    } catch(Exception e)
+    {
+      System.out.println(e.toString());
+    }
+  }
+}
+
+2)
+import java.awt.*;
+import java.awt.event.*;
+public class slip3_2 extends Frame implements Runnable {
+ private int x, y, w, h, f;
+ private Color c = Color.red;
+ public slip3_2() {
+ setTitle("Bouncing Boll");
+ setSize(400, 400);
+ setVisible(true);
+ w = getWidth();
+ h = getHeight();
+ x = (int) (Math.random() * getWidth());
+ y = (int) (Math.random() * getHeight());
+ Thread t = new Thread(this);
+ t.start();
+ }
+ public void run() {
+ while (true) {
+ switch (f) {
+ case 0:
+ y++;
+ if (y > h - 50) {
+c = new Color((int) (Math.random() * 256), (int) 
+(Math.random() * 256),(int) (Math.random() * 256));
+f = 1;
+ }
+ break;
+ case 1:
+ y--;
+ if (y < 0) {
+ c = new Color((int) (Math.random() * 256), (int) 
+(Math.random() * 256),(int) (Math.random() * 256));
+ f = 0;
+ }
+ }
+ repaint();
+ try {
+ Thread.sleep(10);
+ } catch (Exception e) {
+ }
+ }
+ }
+ public void paint(Graphics g) {
+ super.paint(g);
+ g.setColor(c);
+ g.fillOval(x, y, 20, 20);
+ }
+public static void main(String args[]) {
+ new slip3_2();
+ }
+}
+
+3)
+void sum(int no1,int no2)
+{
+    Console.WriteLine(" Add is:" + (no1 + no2));
+}
+int no1, no2;
+Console.Write("enter no1:");
+no1 = Convert.ToInt32(Console.ReadLine());
+Console.Write("enter no2:");
+no2= Convert.ToInt32(Console.ReadLine());
+sum(no1 ,no2);
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim conn As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Dim dr As SqlDataReader
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "insert into teacher values(" + TextBox1.Text + ",'" + TextBox2.Text +
+           "','" + TextBox3.Text + "')"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record Saved Successfully")
+            TextBox1.Text = ""
+            TextBox2.Text = ""
+            TextBox3.Text = ""
+            TextBox1.Focus()
+        Catch ex As Exception
+            MessageBox.Show("Error " + ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Try
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "select * from teacher where tname='Seeta'"
+            dr = cmd.ExecuteReader()
+            If dr.Read Then
+                TextBox1.Text = dr(0)
+                TextBox2.Text = dr(1)
+                TextBox3.Text = dr(2)
+            Else
+                MessageBox.Show("Record not found")
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error " + ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+End Class
+
+
+slip 4 -
+
+1)
+import java.sql.*;
+public class slip4_1
+{
+	public static void main(String args[]) throws Exception
+	{
+	Connection con;
+	Statement st;
+	String query;
+	Class.forName("com.mysql.jdbc.Driver"); 
+	con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testdb","root","123456");
+	st=con.createStatement();
+	query="delete from student where sname like 'S%'";
+	int n=st.executeUpdate(query); 
+	if(n>0)
+	System.out.println(n+" RECORDs DELETED SUCCESSFULLY");
+	else
+	System.out.println("RECORD NOT DELETED");	
+	st.close();	
+	con.close();
+	}
+}
+
+2)slip4_2.html
+<html>
+<body>
+<form name="f1" action="demo" method="post" >
+  <p>  <input type="Submit" value="Submit" name="B1"></p>
+</form>
+</body>
+</html>
+
+2)web.xml
+<?xml version="1.0"?>
+<web-app>
+	<servlet>
+      <servlet-name>myservlet</servlet-name>
+      <servlet-class>slip4_2</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>myservlet</servlet-name>
+        <url-pattern>/demo</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+2)slip4_2.java
+import java.io.*;
+import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class slip4_2 extends HttpServlet {
+ public void doPost(HttpServletRequest req, HttpServletResponse res) 
+throws IOException, ServletException{
+res.setContentType("text/html");
+ PrintWriter out=res.getWriter();
+out.println("<html>");
+out.println("<body>");
+out.println("servlet context"+getServletContext().getServerInfo()+"<br>");
+out.println("Server Name:"+req.getServerName()+"<br>");
+out.println("Remote Address:"+req.getRemoteAddr()+ "<br>");
+out.println("Remote user:"+req.getRemoteUser()+ "<br>");
+out.println("Server port:"+req.getServerPort()+ "<br>");
+out.println("Remote Host:"+req.getRemoteHost()+ "<br>");
+out.println("Local Name:"+req.getLocalName()+ "<br>");
+out.println("browser Information"+req.getHeader("User-Agent"));
+out.println("OS Name:"+System.getProperty("os.name")+ "<br>");
+out.println("</body>");
+out.println("</html>");}}
+
+3)
+Public Class Form1
+    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
+        TextBox1.Text = DateTimePicker1.Value.Day
+        TextBox2.Text = DateTimePicker1.Value.Month
+        TextBox3.Text = DateTimePicker1.Value.Year
+    End Sub
+End Class
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into dept values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "'," + TextBox4.Text + ")"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record inserted successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "update dept set salary = salary + (salary / 100*15) where did=" + TextBox1.Text
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record updated successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "delete from dept where did=" + TextBox1.Text
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record deleted successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+End Class
+
+slip 5 -
+
+1)slip5_1html.jsp
+<html><body>
+	  <form name="f1" method="post" action="slip5_1.jsp">
+	  Enter The Number:<input type="text" name="t1"><br>
+	 <input type="submit" name="s1" value="Show">	 
+</form></body></html>
+
+1)slip5_1.jsp
+<html>
+	<body>
+		<font color="red" size="18">
+		<%
+			int n=Integer.parseInt(request.getParameter("t1"));
+			int ld=n%10;
+			while(n>9)
+			n=n/10;
+			int fd=n;
+			int sum=fd+ld;
+			out.println(sum);
+		%>
+		</font>
+	</body>
+</html>
+
+2)
+import java.awt.*;
+public class slip5_2 extends Frame 
+{
+ int f = 0;
+ public slip5_2() {
+ Signal s = new Signal();
+ s.start();
+ setSize(500, 500);
+ setVisible(true);
+ }
+ public void paint(Graphics g)
+{
+ switch (f) {
+ case 0:
+ g.setColor(Color.red);
+ g.fillOval(60, 60, 50, 50);
+ g.setColor(Color.black);
+ g.fillOval(60, 120, 50, 50);
+ g.drawOval(60, 180, 50, 50);
+ break;
+ case 1:
+ g.setColor(Color.yellow);
+ g.fillOval(60, 120, 50, 50);
+ g.setColor(Color.black);
+ g.fillOval(60, 60, 50, 50);
+ g.drawOval(60, 180, 50, 50);
+ break;
+ case 2:
+ g.setColor(Color.green);
+ g.fillOval(60, 180, 50, 50);
+ g.setColor(Color.black);
+ g.fillOval(60, 120, 50, 50);
+ g.drawOval(60, 60, 50, 50);
+ break;
+ }
+ }
+ class Signal extends Thread {
+ public void run() {
+ while (true) {
+ f = (f + 1) % 3;
+ repaint();
+ try {
+ Thread.sleep(1000);
+ } catch (Exception e) {}
+ }
+ }
+ }
+ public static void main(String args[]) {
+new slip5_2();
+}
+}
+
+3)
+Public Class Form1
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If TextBox1.Text = "A" Or TextBox1.Text = "E" Or TextBox1.Text = "I" Or TextBox1.Text = "O" Or TextBox1.Text = "U" Then
+            MessageBox.Show("Vowel")
+        Else
+            MessageBox.Show("Consonant")
+        End If
+
+        If Asc(TextBox1.Text) >= 65 And Asc(TextBox1.Text) <= 90 Then
+            MessageBox.Show("Uppercase")
+        Else
+            MessageBox.Show("Lowercase")
+        End If
+    End Sub
+End Class
+
+4)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class slip5_2 : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Label1.Text = "";
+        if(TextBox1 .Text .Trim ()=="")
+        {
+            Label1.Text = "Please enter principle amount: ";
+            TextBox1.Focus();
+        }
+        else if(TextBox2 .Text .Trim ()=="")
+        {
+            Label1.Text = "Please enter rate of interest: ";
+            TextBox2.Focus();
+        }
+        else if (TextBox3.Text.Trim() == "")
+        {
+            Label1.Text = "Please enter Time: ";
+            TextBox3.Focus();
+        }
+        else
+        {
+            Label1.Text = "total amt: " + (Convert.ToDouble(TextBox1.Text) * Convert.ToDouble(TextBox2.Text) * Convert.ToDouble(TextBox3.Text) / 100);
+        }
+    }
+}
+
+slip 6 -
+
+1)
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class slip6_1 extends JFrame {
+    private JLabel imageLabel;
+    private Timer timer;
+    private boolean isVisible = true;
+
+    public slip6_1() {
+        setTitle("Image Blinking");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(300, 300);
+        setLocationRelativeTo(null);
+
+        ImageIcon icon = new ImageIcon("download.jpg"); // Provide the path to your image file
+        imageLabel = new JLabel(icon);
+
+        add(imageLabel);
+
+        timer = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isVisible = !isVisible;
+                imageLabel.setVisible(isVisible);
+            }
+        });
+        timer.start();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() 
+	{
+            @Override
+            public void run() {
+                new slip6_1().setVisible(true);
+            }
+        });
+    }
+}
+
+2)slip6_2.html
+<html>
+<body>
+<form name="f1" action="demo" method="post" >
+  <p>  <input type="Submit" value="Submit" name="B1"></p>
+</form>
+</body>
+</html>
+
+2)web.xml
+<?xml version="1.0"?>
+<web-app>
+	<servlet>
+      <servlet-name>myservlet</servlet-name>
+      <servlet-class>slip6_2</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>myservlet</servlet-name>
+        <url-pattern>/demo</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+2)slip6_2.java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class slip6_2 extends HttpServlet 
+{
+public void doPost(HttpServletRequest request, HttpServletResponse 
+response) throws ServletException, IOException 
+{
+ int visits = 0;
+ Cookie[] c= request.getCookies();
+ if (c != null)
+{
+ for (int i=0;i<c.length;i++) 
+ {
+ if (c[i].getName().equals("visitCount"))
+ {
+ visits = Integer.parseInt(c[i].getValue());
+ }
+ }
+ }
+ visits++;
+ Cookie v = new Cookie("visitCount", Integer.toString(visits));
+ response.addCookie(v);
+ response.setContentType("text/html");
+ PrintWriter out = response.getWriter();
+ if (visits == 1) 
+{
+ out.println("<html><body>");
+ out.println("<h2>Welcome to my website!</h2>");
+ out.println("</body></html>");
+ }
+ else 
+{
+ out.println("<html><body>");
+ out.println("<h2>You have visited this website " + visits + " times.</h2>");
+ out.println("</body></html>");
+ }
+ out.close();
+ }
+}
+
+3)
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into movie values('" + TextBox1.Text + "','" + TextBox2.Text + "','" + TextBox3.Text + "')"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record inserted successfully")
+            TextBox1.Text = ""
+            TextBox2.Text = ""
+            TextBox3.Text = ""
+            TextBox1.Focus()
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "delete from movie where rel_year=2022"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record deleted successfully")
+            TextBox1.Focus()
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+End Class
+
+
+slip 7 -
+
+1)slip7_1html.jsp
+<html><body>
+<form method=get action="slip7_1.jsp">
+Enter email id:<input type="text" name="t1"><br><br>
+<input type="submit" value="Display">
+</form></body></html>
+
+1)slip7_1.jsp
+<%@page language="java"%>
+<html><body>
+<font color="red">
+<%! int i,n,cnt;
+String s1;
+%>
+<% s1=request.getParameter("t1");
+n=s1.length();
+cnt=0;
+for(int i=0;i<n;i++)
+{
+char ch=s1.charAt(i);
+if(ch=='@')
+{
+cnt++;
+}}
+if(cnt==1)
+out.println("email valid");
+else
+out.println("email invalid");
+%>
+</font></body></html>
+
+2)
+import java.awt.*;
+import java.awt.event.*;
+
+public class slip7_2 extends Frame implements ActionListener,Runnable
+{
+	Thread y;
+	TextField t;
+	Button b;
+	slip7_2()
+	{
+		t=new TextField(20);
+		b=new Button("start");
+		setLayout(new FlowLayout());
+		add(b);
+		add(t);
+		b.addActionListener(this);
+		setSize(300,300);
+		setVisible(true);	
+		y=new Thread(this);
+	}	
+	public void actionPerformed(ActionEvent e)
+	{
+		String msg=e.getActionCommand();
+		if(msg.equals("start"))
+		{
+			y.start();
+		}
+	}
+	public void run()
+	{
+			for(int i=1;i<=100;i++)
+			{
+			t.setText(i+"");
+				try
+				{
+				Thread.sleep(100);
+				}
+				catch(Exception e){}
+		}
+	}
+
+	
+	public static void main(String[] d)
+	{
+		new slip7_2();
+	}
+
+}
+
+3)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class slip7_1 : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int no = Convert.ToInt32(TextBox1.Text);
+
+            int sum = 0;
+            for (int i = 1; i < no; i++)
+            {
+                if (no % i == 0)
+                {
+                    sum = sum + i;
+                }
+            }
+            if (sum == no)
+            {
+                Response.Write("Perfect Number");
+            }
+            else
+            {
+                Response.Write("Not a Perfect Number");
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Write("Please enter correct integer number");
+            TextBox1.Text = "";
+            TextBox1.Focus();
+        }
+    }
+}
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into student values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "')"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record inserted successfully")
+            TextBox1.Text = ""
+            TextBox2.Text = ""
+            TextBox3.Text = ""
+            TextBox1.Focus()
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "update student set city='Mumbai' where city='Pune'"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record updated successfully")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: This line of code loads data into the 'TybcaDataSet.student' table. You can move, or remove it, as needed.
+        Me.StudentTableAdapter.Fill(Me.TybcaDataSet.student)
+
+    End Sub
+End Class
+
+
+slip 11 -
+1)client
+import java.net.*;
+public class slip11_1cli
+{
+	public static void main(String args[])throws Exception
+	{
+		Socket s=new Socket("localhost",4444);
+		System.out.println(s.getLocalPort());
+		System.out.println(s.getInetAddress());
+	}
+}
+
+1)server
+import java.net.*;
+public class slip11_1ser
+{
+	public static void main(String args[])throws Exception
+	{
+		ServerSocket ss=new ServerSocket(4444);
+		System.out.println("server started");
+		Socket s=ss.accept();
+		System.out.println("connected to client");
+	}
+}
+
+2)
+import java.sql.*;
+public class slip11_2
+{
+	public static void main(String [] args) throws Exception 
+	{
+	Connection con;
+	Statement st;
+	String query;
+	ResultSet rs;
+	Class.forName("com.mysql.jdbc.Driver");
+	con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testdb","root","123456");
+	st=con.createStatement();
+	query="Select * from product,sales where product.pid=sales.pid And sdate between '2022/05/20' and '2022/05/30';"; 
+	rs=st.executeQuery(query);
+	while(rs.next())
+	{
+	 System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getInt(3)+" "+rs.getInt(4)+" "+rs.getInt(5)+" "+rs.getDate(7));
+	}
+	st.close();	
+	con.close();
+	}
+}
+
+3)
+
+4)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace slip11_2
+{
+            class Fruit
+        {
+            static protected int cnt = 0;
+            static public void count()
+            {
+                Console.WriteLine("Total Fruits are : " + cnt);
+            }
+        }
+        class Mango : Fruit
+        {
+            static int mcnt = 0;
+            public void buy()
+            {
+                mcnt++;
+                cnt++;
+            }
+            public void mango_cnt()
+            {
+                Console.WriteLine("Total Mangoes are : " + mcnt);
+            }
+        }
+        class Apple : Fruit
+        {
+            static int acnt = 0;
+            public void buy()
+            {
+                acnt++;
+                cnt++;
+            }
+            public void apple_cnt()
+            {
+                Console.WriteLine("Total Apples are : " + acnt);
+            }
+        }
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Mango m = new Mango();
+                Apple a = new Apple();
+                m.buy();
+                m.buy();
+                a.buy();
+                a.buy();
+                a.buy();
+                a.buy();
+                m.mango_cnt();
+                a.apple_cnt();
+                Fruit.count();
+                Console.ReadKey();
+            }
+        }
+}
+
+
+slip 12 -
+1)
+import java.sql.*;
+public class slip12_1
+{
+	public static void main(String args[])
+	{
+	Connection con;
+	Statement st;
+	String query;
+	ResultSet rs;
+	try
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testdb","root","123456");
+		st=con.createStatement();
+		query="select * from emp";
+		rs=st.executeQuery(query);
+		int count=0;
+		while(rs.next())
+		{
+			count++;
+		}
+		System.out.println("The number of records are: "+count);
+		st.close();
+		con.close();
+	}
+	catch(Exception e)
+	{
+		System.out.println();
+	}
+	}
+}
+
+2)
+import java.util.*;
+class mth extends Thread
+{
+mth(String s)
+{
+super(s);
+}
+public void run()
+{
+System.out.println(getName()+"thread is created");
+while(true)
+{
+System.out.println(this);
+int s1=(int)(Math.random()*5000);
+System.out.println(getName()+"is sleeping for:"+s1+"msec");
+try
+{
+Thread.sleep(s1);
+}catch(Exception e)
+{}
+}}}
+class slip12_2
+{
+public static void main(String args[])
+{
+mth t1=new mth("ABC");
+mth t2=new mth("PQR");
+t1.start();
+t2.start();
+try
+{
+t1.join();
+t2.join();
+}catch(Exception e)
+{}
+System.out.println(t1.getName()+"thread dead");
+System.out.println(t2.getName()+"thread dead");
+}}
+
+3)
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="slip12_1.aspx.cs" Inherits="slip12_1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<style >
+    .button
+    {
+        background-color :green;
+    }
+    .button:hover 
+    {
+        background-color :yellow;
+    }
+</style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <asp:Button ID ="Button1" runat ="server" Text ="Button" CssClass ="button" OnClick="Button1_Click" />
+    </div>
+    </form>
+</body>
+</html>
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into player values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "'," + TextBox4.Text + ")"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record saved successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "update player set no_of_matches=500 where pname='Rohit Sharma'"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record updated successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: This line of code loads data into the 'TybcaDataSet1.player' table. You can move, or remove it, as needed.
+        Me.PlayerTableAdapter.Fill(Me.TybcaDataSet1.player)
+
+    End Sub
+End Class
+
+
+slip 13 -
+1)
+import java.util.*;
+public class slip13_1
+{
+public static void main(String []args)
+{
+Thread t=new Thread();
+System.out.println("current thread is: "+t.currentThread());
+}}
+
+2)
+
+3)
+Public Class Form1
+    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        If PictureBox1.Visible = Visible Then
+            PictureBox1.Visible = False
+        Else
+            PictureBox1.Visible = True
+        End If
+
+    End Sub
+End Class
+
+4)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+namespace slip13_2
+{
+    class Student
+    {
+        int rno;
+        string name;
+        int s1, s2, s3, tot;
+        float per;
+        public void accept()
+        {
+            Console.WriteLine("Enter Student Details : ");
+            Console.Write("Roll No : ");
+            rno = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Name : ");
+            name = Console.ReadLine();
+            Console.Write("Sub. 1 Marks : ");
+            s1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Sub. 2 Marks : ");
+            s2 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Sub. 3 Marks : ");
+            s3 = Convert.ToInt32(Console.ReadLine());
+            tot = s1 + s2 + s3;
+            per = tot / 3;
+        }
+        public void display()
+        {
+            Console.WriteLine("Student Details : ");
+            Console.WriteLine("Roll No : " + rno);
+            Console.WriteLine("Name : " + name);
+            Console.WriteLine("Sub. 1 Marks : " + s1);
+            Console.WriteLine("Sub. 2 Marks : " + s2);
+            Console.WriteLine("Sub. 3 Marks : " + s3);
+            Console.WriteLine("Total Marks : " + tot);
+            Console.WriteLine("Per. Marks : " + per);
+        }
+        static void Main(string[] args)
+        {
+            int n, i;
+
+            Console.WriteLine("Enter No. of Students : ");
+            n = Convert.ToInt32(Console.ReadLine());
+
+            Student[] s = new Student[n];
+            for (i = 0; i < n; i++)
+            {
+                s[i] = new Student();
+                s[i].accept();
+            }
+            for (i = 0; i < n; i++)
+            {
+                s[i].display();
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+slip 16 -
+
+1)slip16_1html.jsp
+<html><body>
+<form method=get action="slip16_1.jsp">
+Enter user name:<input type="text" name="t1"><br><br>
+Enter password:<input type="text" name="t2"><br><br>
+<input type="submit" value="Display">
+</form></body></html>
+
+1)slip16_1.jsp
+<%@page language="java"%>
+<html><body>
+<font color="red">
+<%! String name,pwd;
+%>
+<% name=request.getParameter("t1");
+pwd=request.getParameter("t2");
+if(name.compareTo(pwd)==0)
+out.println("login success");
+else
+out.println("login unsuccess");
+%>
+</font></body></html>
+
+2)
+import java.util.*;
+import java.sql.*; 
+public class slip16_2
+{
+	public static void main(String args[]) throws Exception
+	{
+	Connection con=null;
+	PreparedStatement ps=null;
+	String query,query2;
+	Statement st;
+	ResultSet rs;
+	int nos;
+	int a,n,c;
+	String b;
+	Class.forName("com.mysql.jdbc.Driver"); 
+	con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testdb","root","123456"); 
+	Scanner sc = new Scanner(System.in); 
+	System.out.println("Enter number of students: ");
+	nos = sc.nextInt();              
+	for(int i=1;i<=nos;i++)
+	{
+	System.out.println("Pls Enter rno");  
+	a=sc.nextInt();						  	
+	System.out.println("Pls Enter sname");
+	b=sc.next();
+	System.out.println("Pls Enter per");
+	c=sc.nextInt();
+	query="insert into student1 values(?,?,?)"; 
+	ps=con.prepareStatement(query); 
+	ps.setInt(1,a);
+	ps.setString(2,b);
+	ps.setInt(3,c);
+	n=ps.executeUpdate(); 
+	if(n>0)
+	System.out.println("RECORD INSERTED SUCCESSFULLY");
+	else
+	System.out.println("RECORD NOT INSERTED");
+	}
+	ps.close();		
+	st=con.createStatement(); 
+	query2="select * from student1 where per=(select max(per) from student1)"; 
+	rs=st.executeQuery(query2); 
+	System.out.println("DETAILS OF STUDENT HAVING MAXIMUM PERCENTAGE IS AS FOLLOWS");
+	while(rs.next())
+		{
+			System.out.println(rs.getInt("rno") + rs.getString("sname") + rs.getInt("per"));
+		}
+	st.close();	
+	con.close();
+	}	
+}
+
+3)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class slip16_1 : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        if (TextBox1.Text == "DYP" && TextBox2.Text == "Pimpri")
+        {
+            //Label1.Text = "Login Successful";
+            Response.Write("<script>alert('Login Successful');</script>");
+        }
+        else
+        {
+            Label1.Text = "Login Unsuccessful";
+        }
+    }
+}
+
+4)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace slip16_2
+{
+    class Suppliers
+    {
+        int sid;
+        string name;
+        int pincode;
+        string address;
+
+        public void accept()
+        {
+            Console.WriteLine("Enter Suppliers Details : ");
+            Console.Write("sid: : ");
+            sid = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Name : ");
+            name = Console.ReadLine();
+            Console.Write("address : ");
+            address = Console.ReadLine();
+            Console.Write("pincode : ");
+            pincode = Convert.ToInt32(Console.ReadLine());
+
+        }
+
+        public void display()
+        {
+            Console.WriteLine("Suppliers Details : ");
+            Console.WriteLine("sid : " + sid);
+            Console.WriteLine("Name : " + name);
+            Console.WriteLine("Address: " + address);
+            Console.WriteLine("pincode : " + pincode);
+
+        }
+
+        static void Main(string[] args)
+        {
+            int n, i;
+
+            Console.WriteLine("Enter No. of Suppliers : ");
+            n = Convert.ToInt32(Console.ReadLine());
+
+            Suppliers[] s = new Suppliers[n];
+
+            for (i = 0; i < n; i++)
+            {
+                s[i] = new Suppliers();
+                s[i].accept();
+            }
+
+            for (i = 0; i < n; i++)
+            {
+                s[i].display();
+            }
+
+            Console.ReadKey();
+
+        }
+    }
+}
+
+slip 17 -
+1)
+import java.util.*;
+class vowel extends Thread
+{
+String s2;
+Thread t1;
+vowel(String s1)
+{
+s2=s1;
+t1=new Thread(this);
+t1.start();
+}
+public void run()
+{
+for(int i=0;i<s2.length();i++)
+{
+char z=s2.charAt(i);
+if( z=='a' || z=='e' ||z=='i' ||z=='o' ||z=='u')
+{
+try
+{
+System.out.println(z);
+Thread.sleep(3000);
+}
+catch(Exception e){}
+}}}}
+public class slip17_1
+{
+public static void main(String args[])throws Exception
+{
+Scanner sc=new Scanner(System.in);
+System.out.println("Enter a string");
+String n=sc.next();
+vowel tv=new vowel(n);
+}}
+
+2)client 
+import java.net.*;
+import java.io.*;
+public class slip17_2c
+{
+ public static void main(String[] args) throws Exception 
+{
+Socket s = new Socket("localhost", 5400);
+DataInputStream dis = new DataInputStream(s.getInputStream());
+ System.out.print("result = ");
+System.out.print(dis.readUTF());
+}
+}
+
+2)server
+import java.io.*;
+import java.net.*;
+import java.util.*;
+public class slip17_2s
+{
+ public static void main(String[] args) throws Exception
+{
+ServerSocket ss = new ServerSocket(5400);
+ while (true) {
+ Socket s = ss.accept();
+ System.out.println("Server Started");
+ DataOutputStream dos = new 
+DataOutputStream(s.getOutputStream());
+ File f = new File("temp.txt");
+ if (f.exists()) {
+ Scanner sc = new Scanner(f);
+ while (sc.hasNextLine())
+ {
+ String str = sc.nextLine();
+ dos.writeUTF(f.getName() + " = file content = " + str);
+ }
+ }
+ else {
+ String stra = "file is not Exists on SERVER";
+ dos.writeUTF(" Error -- " + stra);
+ }
+ }
+ }
+}
+
+3)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+namespace slip17_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string str;
+            Console.Write("Enter String : ");
+            str = Console.ReadLine();
+            Console.WriteLine("Vowels from the strings are : ");
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'a'
+               || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u')
+                {
+                    Console.WriteLine(str[i]);
+                }
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into product values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "'," + TextBox4.Text + ")"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record saved successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: This line of code loads data into the 'TybcaDataSet.product' table. You can move, or remove it, as needed.
+        Me.ProductTableAdapter.Fill(Me.TybcaDataSet.product)
+
+    End Sub
+End Class
+
+
+
+slip 19 -
+1)slip19_1html.jsp
+<html>
+	<body>
+		<center><br><br>
+		<form action="slip19_1.jsp" method='GET'>
+		<b>Enter Name :</b>
+		<input type=text name="name">
+		<input type=submit  value="submit">
+		<br><br></form>
+		</center>
+	</body>
+</html>	
+
+1)slip19_1.jsp
+<%@page import="java.util.*"%>
+<html>
+	<body>
+		<%
+			Date time=new Date();
+			String n=request.getParameter("name");
+			if(time.getHours()>0&&time.getHours()<12)
+			{
+				out.println("Good Morning!!! "+n);
+			}
+			else if(time.getHours()>=12&&time.getHours()<=16)
+			{
+				out.println("Good Afternoon!!! "+n);
+			}
+			else if(time.getHours()>=16&&time.getHours()<20)
+			{
+				out.println("Good Evening!!! "+n);
+			}
+			else 
+				out.println("Good Night!!! "+n);
+		%>
+	</body>
+</html>
+
+2)
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+class slip19_2 extends Frame implements ActionListener
+{
+Label l1,l2;
+TextField t1,t2;
+Button b1;
+
+public slip19_2()
+{
+setLayout(null);
+setSize(800,600);
+setTitle("Record Display");
+setVisible(true);
+
+l1=new Label("ENTER ENO");
+l1.setBounds(100,200,150,50);
+add(l1);
+
+l2=new Label("Answer");
+l2.setBounds(100,300,150,50);
+add(l2);
+
+t1=new TextField();
+t1.setBounds(300,200,150,50);
+add(t1);
+
+t2=new TextField();
+t2.setBounds(300,300,150,50);
+add(t2);
+
+
+b1=new Button("DISPLAY");
+b1.setBounds(300,400,150,50);
+add(b1);
+b1.addActionListener(this);
+
+}
+
+public void actionPerformed(ActionEvent ae)
+{
+	String cap=ae.getActionCommand();
+	if(cap.equals("DISPLAY"))
+	{
+		try
+		{
+	Connection con;
+	PreparedStatement ps;
+	String query;
+	ResultSet rs;
+	
+	
+	int a;
+	String d;
+	
+	
+	/*Scanner sc=new Scanner(System.in);
+							  	
+	System.out.println("Pls Enter ENAME");
+	b=sc.next();
+	*/
+	a=Integer.parseInt(t1.getText());
+	Class.forName("com.mysql.jdbc.Driver"); 
+	con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testdb","root","123456");
+	query="select * from student2 where rno like ?";
+	ps=con.prepareStatement(query); 
+	ps.setInt(1,a);
+	rs=ps.executeQuery();
+	if(rs.next())
+	{
+	t2.setText(rs.getInt("rno") + " " + rs.getString("sname") + " " + rs.getFloat("per"));
+	}
+	ps.close();	
+	con.close();
+	}catch(Exception e){}
+	}
+}
+	public static void main(String args[])
+	{
+	new slip19_2();
+	}
+}
+
+3)
+Public Class Form1
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim str As String = TextBox1.Text
+        str = StrReverse(str)
+        If TextBox1.Text = str Then
+            MessageBox.Show("string is palindrome")
+        Else
+            MessageBox.Show("string is not palindrome")
+        End If
+    End Sub
+End Class
+
+4)
+
+
+slip 28 -
+1)
+class table
+{
+synchronized void printTable(int n)
+{
+for(int i=1;i<=5;i++)
+{
+System.out.println(n*i);
+try
+{
+Thread.sleep(400);
+}catch(Exception e)
+{
+System.out.println(e);
+}}}}
+class mythread1 extends Thread
+{
+table t;
+mythread1(table t)
+{
+this.t=t;
+}
+public void run()
+{
+t.printTable(5);
+}
+}
+class mythread2 extends Thread
+{
+table t;
+mythread2(table t)
+{
+this.t=t;
+}
+public void run()
+{
+t.printTable(100);
+}}
+class slip28_1
+{
+public static void main(String args[])
+{
+table obj=new table();
+mythread1 t1=new mythread1(obj);
+mythread2 t2=new mythread2(obj);
+t1.start();
+t2.start();
+}
+}
+
+2)
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class slip28_2 extends JFrame {
+    private Choice empNoChoice;
+    private JTable empDetailsTable;
+    private DefaultTableModel tableModel;
+
+    private String[][] dummyData = {
+            {"101", "John Doe", "Developer", "50000"},
+            {"102", "Jane Smith", "Manager", "60000"},
+            {"103", "Mark Johnson", "Designer", "55000"}
+    };
+
+    public slip28_2() {
+        setTitle("Employee Details");
+        setSize(600, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Choice component for selecting employee number
+        empNoChoice = new Choice();
+        empNoChoice.add("101");
+        empNoChoice.add("102");
+        empNoChoice.add("103");
+
+        // Button to trigger display of employee details
+        JButton showDetailsButton = new JButton("Show Details");
+        showDetailsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayEmployeeDetails();
+            }
+        });
+
+        JPanel topPanel = new JPanel(new FlowLayout());
+        topPanel.add(new JLabel("Select Emp No:"));
+        topPanel.add(empNoChoice);
+        topPanel.add(showDetailsButton);
+        add(topPanel, BorderLayout.NORTH);
+
+        // Table for displaying employee details
+        tableModel = new DefaultTableModel();
+        empDetailsTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(empDetailsTable);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
+    private void displayEmployeeDetails() {
+        String selectedEmpNo = empNoChoice.getSelectedItem();
+        String[] selectedEmpDetails = null;
+        for (String[] emp : dummyData) {
+            if (emp[0].equals(selectedEmpNo)) {
+                selectedEmpDetails = emp;
+                break;
+            }
+        }
+
+        if (selectedEmpDetails != null) {
+            String[] columnNames = {"Emp No", "Name", "Position", "Salary"};
+            tableModel.setDataVector(new Object[][]{selectedEmpDetails}, columnNames);
+        } else {
+            JOptionPane.showMessageDialog(this, "Employee details not found for selected Emp No", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new slip28_2().setVisible(true);
+            }
+        });
+    }
+}
+
+3)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+namespace slip28_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n, i;
+            Console.Write("Enter Array Size : ");
+            n = Convert.ToInt32(Console.ReadLine());
+            int[] arr = new int[n];
+            Console.WriteLine("Enter Array Elements : ");
+            for (i = 0; i < n; i++)
+            {
+                arr[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine("Array Elements before reverse : ");
+            for (i = 0; i < n; i++)
+            {
+                Console.WriteLine(arr[i]);
+            }
+            int j = n - 1;
+            for (i = 0; i < j; i++)
+            {
+                int temp;
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                j--;
+            }
+            Console.WriteLine("Array Elements after reverse : ");
+            for (i = 0; i < n; i++)
+            {
+                Console.WriteLine(arr[i]);
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into patient values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "')"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record saved successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+End Class
+
+
+
+slip 30 -
+1)slip30_1html.jsp
+<html><body>
+<form method=get action="slip30_1.jsp">
+Enter String:<input type="text" name="t1"><br><br>
+<input type="submit" value="Display">
+</form></body></html>
+
+1)slip30_1.jsp
+<%@page language="java"%>
+<html><body>
+<font color="red">
+<%! 
+String s1;
+%>
+<% s1=request.getParameter("t1");
+StringBuffer br=new StringBuffer(s1);
+out.println("reverse string: "+br.reverse());
+%>
+</font></body></html>
+
+2)
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class slip30_2 extends JFrame {
+    private int x = 50;
+    private int y = 250;
+
+    public slip30_2() {
+        setTitle("Moving Car");
+        setSize(800, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        MovingPanel movingPanel = new MovingPanel();
+        add(movingPanel);
+
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    movingPanel.moveCar();
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
+
+    class MovingPanel extends JPanel {
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(Color.RED);
+            g.fillRect(x, y, 100, 50);
+            g.setColor(Color.BLACK);
+            g.fillOval(x + 10, y + 40, 30, 30);
+            g.fillOval(x + 60, y + 40, 30, 30);
+            g.setColor(Color.GRAY);
+            g.fillRect(x + 70, y - 20, 30, 20);
+        }
+
+        public void moveCar() {
+            if (x >= 800) {
+                x = -100;
+            }
+            x += 1;
+            repaint();
+        }
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new slip30_2().setVisible(true);
+            }
+        });
+    }
+}
+
+3)
+Public Class Form1
+    Private Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button1.Click
+        txtnet.Text = CInt(txtbasicsalary.Text) + CInt(txtda.Text) + CInt(txthra.Text) + CInt(txtma.Text) + CInt(txtpf.Text) - CInt(txtpt.Text) - CInt(txtit.Text)
+        MessageBox.Show("Net salary of " & txtname.Text & " is  " & txtnet.Text)
+    End Sub
+End Class
+
+4)
+Imports System.Data
+Imports System.Data.SqlClient
+Public Class Form1
+    Dim con As New SqlConnection("Data Source=.;Initial Catalog=tybca;Integrated Security=True;Pooling=False")
+    Dim cmd As New SqlCommand
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Try
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "insert into supplier values(" + TextBox1.Text + ",'" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "')"
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Record saved successfuly")
+        Catch ex As Exception
+            MessageBox.Show("Error : " + ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+End Class
